@@ -127,11 +127,7 @@ def main():
             st.text(url)
 
             st.subheader("Extracted Text:")  
-            st.markdown('<div style="width:100%; padding:10px; background-color:#f4f4f4; border-radius:5px; word-wrap: break-word;">', unsafe_allow_html=True)
-            with st.markdown('<div style="margin:0px; padding:0px;">', unsafe_allow_html=True):
-                st.markdown(f"<pre>{text}</pre>", unsafe_allow_html=True)
-            st.markdown('</div>', unsafe_allow_html=True)
-            st.markdown('</div>', unsafe_allow_html=True)
+            st.markdown(f'<div style="width:100%; padding:10px; background-color:#f4f4f4; border-radius:5px; word-wrap: break-word;"><pre>{text}</pre></div>', unsafe_allow_html=True)
                     
             st.subheader("Generated Social Media Posts:")
             posts = generate_social_media_posts(text, platforms)
