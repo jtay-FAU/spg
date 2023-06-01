@@ -101,9 +101,7 @@ def main():
         
         # Logo and title
         logo_url = "https://www.findauniversity.com/img/logo.png"
-        st.image(logo_url, width=200)
-        st.title("Social Media Post Generator"")
-                
+        st.image(logo_url, width=200)                
         st.title("Social Media Post Generator")
 
         url = st.text_input("Enter the URL:")
