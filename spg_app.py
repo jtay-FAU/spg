@@ -97,6 +97,7 @@ def main():
             page_title="Social Media Post Generator",
             page_icon="🧭",
             layout="wide"
+            initial_sidebar_state="expanded"
         )
         
         # Logo and title
@@ -119,14 +120,13 @@ def main():
 
         if st.button("Generate Posts"):
             h1_title, text = fetch_text_from_url(url)
+            
+            st.markdown("---")
+            st.header("Generate Posts")
+            st.write(f"H1 Title: {h1_title}")
+            st.write(f"URL: {url}")
 
-            st.subheader("H1 Title:")
-            st.text(h1_title)
-
-            st.subheader("URL:")
-            st.text(url)
-
-            st.subheader("Extracted Text:")  
+            st.subheader("Article Text:")  
             st.markdown(f'<div style="width:100%; padding:10px; border-radius:5px; word-wrap: break-word;"><pre>{text}</pre></div>', unsafe_allow_html=True)
                     
             st.subheader("Generated Social Media Posts:")
@@ -139,5 +139,3 @@ def main():
                 
 if __name__ == "__main__":
     main()
-
-
