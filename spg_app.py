@@ -127,7 +127,9 @@ def main():
             st.text(url)
 
             st.subheader("Extracted Text:")
+            st.markdown('<div style="width:100%; padding:10px; background-color:#f4f4f4; border-radius:5px;">', unsafe_allow_html=True)
             st.text(text)
+            st.markdown('</div>', unsafe_allow_html=True)
 
             st.subheader("Generated Social Media Posts:")
             posts = generate_social_media_posts(text, platforms)
@@ -135,11 +137,12 @@ def main():
                 st.subheader(platform)
                 st.markdown('<div style="display:flex;">', unsafe_allow_html=True)
                 st.image(Image.open(logo_file).resize((32, 32)), width=32)
-                st.markdown('<div style="margin-left:10px; overflow-wrap: break-word;">', unsafe_allow_html=True)
+                st.markdown('<div style="margin-left:10px;">', unsafe_allow_html=True)
+                st.markdown('<div style="width:100%; padding:10px; background-color:#f4f4f4; border-radius:5px;">', unsafe_allow_html=True)
                 st.text(post)
                 st.markdown('</div>', unsafe_allow_html=True)
                 st.markdown('</div>', unsafe_allow_html=True)
-
+                st.markdown('</div>', unsafe_allow_html=True)
 
 if __name__ == "__main__":
     main()
