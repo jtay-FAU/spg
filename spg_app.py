@@ -1,7 +1,11 @@
 import streamlit as st
+import requests
+from bs4 import BeautifulSoup
+import openai
+from PIL import Image
 
 def check_password():
-    """Returns `True` if the user had the correct password."""
+    """Returns `True` if the user entered the correct password."""
 
     def password_entered():
         """Checks whether a password entered by the user is correct."""
@@ -27,16 +31,6 @@ def check_password():
     else:
         # Password correct.
         return True
-
-if check_password():
-import streamlit as st
-import requests
-from bs4 import BeautifulSoup
-import openai
-from PIL import Image
-
-# Access OpenAI API key from Streamlit Secrets
-openai.api_key = st.secrets["openai"]["api_key"]
 
 @st.cache
 def fetch_text_from_url(url):
@@ -89,30 +83,31 @@ def generate_social_media_posts(text, platforms):
     return posts
 
 def main():
-    st.title("Social Media Post Generator")
+    if check_password():
+        st.title("Social Media Post Generator")
 
-    url = st.text_input("Enter the URL:")
-    platforms = st.multiselect("Select social media platforms:", ["Twitter", "LinkedIn", "Facebook", "TikTok", "Instagram"])
-    
-    if st.button("Generate Posts"):
-        h1_title, text = fetch_text_from_url(url)
+        url = st.text_input("Enter the URL:")
+        platforms = st.multiselect("Select social media platforms:", ["Twitter", "LinkedIn", "Facebook", "TikTok", "Instagram"])
 
-        st.subheader("H1 Title:")
-        st.text(h1_title)
+        if st.button("Generate Posts"):
+            h1_title, text = fetch_text_from_url(url)
 
-        st.subheader("URL:")
-        st.text(url)
+            st.subheader("H1 Title:")
+            st.text(h1_title)
 
-        st.subheader("Extracted Text:")
-        st.text(text)
+            st.subheader("URL:")
+            st.text(url)
 
-        st.subheader("Generated Social Media Posts:")
-        posts = generate_social_media_posts(text, platforms)
-        for platform, (post, logo_file) in posts.items():
-            st.subheader(platform)
-            logo_image = Image.open(logo_file).resize((32, 32))
-            st.image(logo_image, use_column_width=True)
-            st.text(post)
+            st.subheader("Extracted Text:")
+            st.text(text)
+
+            st.subheader("Generated Social Media Posts:")
+            posts = generate_social_media_posts(text, platforms)
+            for platform, (post, logo_file) in posts.items():
+                st.subheader(platform)
+                logo_image = Image.open(logo_file).resize((32, 32))
+                st.image(logo_image, use_column_width=True)
+                st.text(post)
 
 if __name__ == "__main__":
     main()
