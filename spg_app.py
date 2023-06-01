@@ -5,7 +5,7 @@ def check_password():
 
     def password_entered():
         """Checks whether a password entered by the user is correct."""
-        if st.session_state["password"] == st.secrets["password"]:
+        if st.session_state["password"] == st.secrets["security"]["password"]:
             st.session_state["password_correct"] = True
             del st.session_state["password"]  # don't store password
         else:
@@ -34,8 +34,8 @@ if check_password():
     import openai
     from PIL import Image
 
-    # Use Streamlit Secrets to store the OpenAI API key
-    openai.api_key = st.secrets["openai_api_key"]
+    # Access OpenAI API key from Streamlit Secrets
+    openai.api_key = st.secrets["openai"]["api_key"]
 
     def fetch_text_from_url(url):
         response = requests.get(url)
