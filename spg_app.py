@@ -127,7 +127,11 @@ def main():
             st.text(url)
 
             st.subheader("Extracted Text:")  
-            st.text(text)
+            st.markdown('<div style="width:100%; padding:10px; background-color:#f4f4f4; border-radius:5px; word-wrap: break-word;">', unsafe_allow_html=True)
+            with st.markdown('<div style="margin:0px; padding:0px;">', unsafe_allow_html=True):
+                t.markdown(f"<pre>{text}</pre>", unsafe_allow_html=True)
+            st.markdown('</div>', unsafe_allow_html=True)
+            st.markdown('</div>', unsafe_allow_html=True)
                     
             st.subheader("Generated Social Media Posts:")
             posts = generate_social_media_posts(text, platforms)
@@ -137,7 +141,7 @@ def main():
                 st.image(Image.open(logo_file).resize((32, 32)), width=32)
                 st.markdown('<div style="margin-left:10px;">', unsafe_allow_html=True)
                 st.markdown('<div style="width:100%; padding:10px; background-color:#f4f4f4; border-radius:5px; word-wrap: break-word;">', unsafe_allow_html=True)
-                st.text(post)
+                st.markdown(f"<pre>{post}</pre>", unsafe_allow_html=True)
                 st.markdown('</div>', unsafe_allow_html=True)
                 st.markdown('</div>', unsafe_allow_html=True)
                 st.markdown('</div>', unsafe_allow_html=True)
