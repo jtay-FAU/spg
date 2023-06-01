@@ -35,7 +35,6 @@ def check_password():
         return True
 
 @st.cache
-
 def fetch_text_from_url(url):
     response = requests.get(url)
     soup = BeautifulSoup(response.text, 'html.parser')
@@ -94,12 +93,24 @@ def generate_social_media_posts(text, platforms):
 
 def main():
     if check_password():
-        st.set_page_config(page_title="Social Media Post Generator", page_icon="https://www.findauniversity.com/img/logo.png", layout="wide")
-
+        st.set_page_config(
+            page_title="Social Media Post Generator",
+            page_icon="🧭",
+            layout="wide"
+        )
+        
+        # Logo and title
+        logo_url = "https://www.findauniversity.com/img/logo.png"
+        st.image(logo_url, width=200)
+        st.title("Social Media Post Generator"")
+                
         st.title("Social Media Post Generator")
 
         url = st.text_input("Enter the URL:")
-        platforms = st.multiselect("Select social media platforms:", ["All", "Twitter", "LinkedIn", "Facebook", "TikTok", "Instagram"])
+        platforms = st.multiselect(
+            "Select social media platforms:",
+            ["All", "Twitter", "LinkedIn", "Facebook", "TikTok", "Instagram"]
+        )
         new_platform = st.text_input("Enter a new platform (optional):")
 
         if new_platform:
@@ -124,10 +135,15 @@ def main():
             posts = generate_social_media_posts(text, platforms)
             for platform, (post, logo_file) in posts.items():
                 st.subheader(platform)
+                st.markdown('<div style="float:left; margin-right:10px;">', unsafe_allow_html=True)
                 logo_image = Image.open(logo_file).resize((32, 32))
                 st.image(logo_image, use_column_width=True)
+                st.markdown('</div>', unsafe_allow_html=True)
+                st.markdown('<div style="overflow-wrap: break-word;">', unsafe_allow_html=True)
                 st.text(post)
+                st.markdown('</div>', unsafe_allow_html=True)
 
 if __name__ == "__main__":
     main()
+
 
