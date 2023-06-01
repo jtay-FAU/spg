@@ -131,6 +131,7 @@ def main():
             with st.markdown('<div style="margin:0px; padding:0px;">', unsafe_allow_html=True):
                 st.text(text)
             st.markdown('</div>', unsafe_allow_html=True)
+            st.markdown('</div>', unsafe_allow_html=True)
         
             st.subheader("Generated Social Media Posts:")
             posts = generate_social_media_posts(text, platforms)
