@@ -4,6 +4,8 @@ from bs4 import BeautifulSoup
 import openai
 from PIL import Image
 
+openai.api_key = st.secrets["openai"]["api_key"]
+
 def check_password():
     """Returns `True` if the user entered the correct password."""
 
@@ -33,8 +35,6 @@ def check_password():
         return True
 
 @st.cache
-
-openai.api_key = st.secrets["openai"]["api_key"]
 
 def fetch_text_from_url(url):
     response = requests.get(url)
