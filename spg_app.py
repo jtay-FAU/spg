@@ -96,7 +96,7 @@ def main():
         st.set_page_config(
             page_title="Social Media Post Generator",
             page_icon="🧭",
-            layout="wide"
+            layout="wide",
             initial_sidebar_state="expanded"
         )
         
