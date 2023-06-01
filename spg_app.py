@@ -126,11 +126,12 @@ def main():
             st.subheader("URL:")
             st.text(url)
 
-            st.subheader("Extracted Text:")
+            st.subheader("Extracted Text:")  
             st.markdown('<div style="width:100%; padding:10px; background-color:#f4f4f4; border-radius:5px;">', unsafe_allow_html=True)
-            st.text(text)
+            with st.markdown('<div style="margin:0px; padding:0px;">', unsafe_allow_html=True):
+                st.text(text)
             st.markdown('</div>', unsafe_allow_html=True)
-
+        
             st.subheader("Generated Social Media Posts:")
             posts = generate_social_media_posts(text, platforms)
             for platform, (post, logo_file) in posts.items():
@@ -143,7 +144,7 @@ def main():
                 st.markdown('</div>', unsafe_allow_html=True)
                 st.markdown('</div>', unsafe_allow_html=True)
                 st.markdown('</div>', unsafe_allow_html=True)
-
+                
 if __name__ == "__main__":
     main()
 
