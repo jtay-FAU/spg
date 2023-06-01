@@ -33,6 +33,9 @@ def check_password():
         return True
 
 @st.cache
+
+openai.api_key = st.secrets["openai"]["api_key"]
+
 def fetch_text_from_url(url):
     response = requests.get(url)
     soup = BeautifulSoup(response.text, 'html.parser')
