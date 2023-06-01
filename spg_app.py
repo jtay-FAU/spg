@@ -133,13 +133,13 @@ def main():
             posts = generate_social_media_posts(text, platforms)
             for platform, (post, logo_file) in posts.items():
                 st.subheader(platform)
-                st.markdown('<div style="float:left; margin-right:10px;">', unsafe_allow_html=True)
-                logo_image = Image.open(logo_file).resize((32, 32))
-                st.image(logo_image, use_column_width=True)
-                st.markdown('</div>', unsafe_allow_html=True)
-                st.markdown('<div style="overflow-wrap: break-word;">', unsafe_allow_html=True)
+                st.markdown('<div style="display:flex;">', unsafe_allow_html=True)
+                st.image(Image.open(logo_file).resize((32, 32)), width=32)
+                st.markdown('<div style="margin-left:10px; overflow-wrap: break-word;">', unsafe_allow_html=True)
                 st.text(post)
                 st.markdown('</div>', unsafe_allow_html=True)
+                st.markdown('</div>', unsafe_allow_html=True)
+
 
 if __name__ == "__main__":
     main()
