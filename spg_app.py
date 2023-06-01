@@ -65,7 +65,14 @@ def generate_social_media_posts(text, platforms):
     }
     posts = {}
 
+    if "All" in platforms:
+        platforms = list(social_media_platforms.keys())
+
     for platform in platforms:
+        if platform not in social_media_platforms:
+            st.error(f"Invalid platform: {platform}")
+            continue
+
         logo_file = social_media_platforms[platform]
         prompt = f"Create a social media post to promote the following article on {platform}. The post should be engaging and tailored to the {platform} audience. Text: \n\n{text}\n\n{platform} Post:"
         response = openai.Completion.create(
@@ -84,10 +91,19 @@ def generate_social_media_posts(text, platforms):
 
 def main():
     if check_password():
+        st.set_page_config(page_title="Social Media Post Generator", page_icon="https://www.findauniversity.com/img/logo.png", layout="wide")
+
         st.title("Social Media Post Generator")
 
         url = st.text_input("Enter the URL:")
-        platforms = st.multiselect("Select social media platforms:", ["Twitter", "LinkedIn", "Facebook", "TikTok", "Instagram"])
+        platforms = st.multiselect("Select social media platforms:", ["All", "Twitter", "LinkedIn", "Facebook", "TikTok", "Instagram"])
+        new_platform = st.text_input("Enter a new platform (optional):")
+
+        if new_platform:
+            platforms.append(new_platform)
+
+        if "All" in platforms:
+            platforms.remove("All")
 
         if st.button("Generate Posts"):
             h1_title, text = fetch_text_from_url(url)
@@ -111,3 +127,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
