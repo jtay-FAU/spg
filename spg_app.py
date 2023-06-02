@@ -69,11 +69,8 @@ def generate_social_media_posts(text, platforms):
     posts = {}
 
     for platform in platforms:
-        if platform not in social_media_platforms:
-            st.error(f"Invalid platform: {platform}")
-            continue
+        logo_file = social_media_platforms.get(platform, "custom_logo.png")
 
-        logo_file = social_media_platforms[platform]
         prompt = f"Create a social media post to promote the following article on {platform}. The post should be engaging and tailored to the {platform} audience. Text: \n\n{text}\n\n{platform} Post:"
         response = openai.Completion.create(
             engine="text-davinci-003",
@@ -84,10 +81,10 @@ def generate_social_media_posts(text, platforms):
             temperature=0.7,
             top_p=1
         )
-        
+
         post = response.choices[0].text.strip()
         posts[platform] = (post, logo_file)
-        
+
         time.sleep(2)
 
     return posts
@@ -100,10 +97,10 @@ def main():
             layout="wide",
             initial_sidebar_state="expanded"
         )
-        
+
         # Logo and title
         logo_url = "https://www.findauniversity.com/img/logo.png"
-        st.image(logo_url, width=200)                
+        st.image(logo_url, width=200)
         st.title("Social Media Post Generator")
 
         url = st.text_input("Enter the URL:")
@@ -111,28 +108,27 @@ def main():
             "Select social media platforms:",
             ["Twitter", "LinkedIn", "Facebook", "TikTok", "Instagram"]
         )
-        
+
         select_all = st.checkbox("Select All")
         if select_all:
             platforms = ["Twitter", "LinkedIn", "Facebook", "TikTok", "Instagram"]
-            
+
         new_platform = st.text_input("Enter a new platform (optional):")
 
         if new_platform:
             platforms.append(new_platform)
-             
 
         if st.button("Generate Posts"):
             h1_title, text = fetch_text_from_url(url)
-            
+
             st.markdown("---")
             st.header("Generate Posts")
             st.write(f"H1 Title: {h1_title}")
             st.write(f"URL: {url}")
 
-            st.subheader("Article Text:")  
+            st.subheader("Article Text:")
             st.markdown(f'<div style="width:100%; padding:10px; border-radius:5px; word-wrap: break-word;"><pre>{text}</pre></div>', unsafe_allow_html=True)
-                    
+
             st.subheader("Generated Social Media Posts:")
             posts = generate_social_media_posts(text, platforms)
             for platform, (post, logo_file) in posts.items():
@@ -140,7 +136,8 @@ def main():
                 st.markdown('<div style="display:flex;">', unsafe_allow_html=True)
                 st.image(Image.open(logo_file).resize((32, 32)), width=32)
                 st.markdown(f'<div style="margin-left:10px;"><div style="width:100%; padding:10px; background-color:#3399ff; border-radius:5px; word-wrap: break-word;"><pre>{post}</pre></div></div>', unsafe_allow_html=True)
-                
+
 if __name__ == "__main__":
     main()
+
 
