@@ -119,6 +119,9 @@ def main():
             platforms.append(new_platform)
 
         if st.button("Generate Posts"):
+            if not url or not platforms:
+                st.warning("Please enter a URL and select at least one platform before generating posts.")
+           else
             h1_title, text = fetch_text_from_url(url)
 
             st.markdown("---")
