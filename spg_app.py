@@ -115,11 +115,13 @@ def main():
             ["Twitter", "LinkedIn", "Facebook", "TikTok", "Instagram"]
         )
         
+        if len(platforms) == 0 and not select_all and not new_platform:
+            st.warning("Please select at least one platform.")
+            st.stop()               
+        
         select_all = st.checkbox("Select All")
         if select_all:
-            platforms = ["Twitter", "LinkedIn", "Facebook", "TikTok", "Instagram"]
-            
-        )   
+            platforms = ["Twitter", "LinkedIn", "Facebook", "TikTok", "Instagram"]                   
         
         if len(platforms) == 0 and not select_all and not new_platform:
             st.warning("Please select at least one platform.")
