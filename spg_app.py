@@ -4,6 +4,8 @@ from bs4 import BeautifulSoup
 import openai
 from PIL import Image
 import time
+import base64
+import io
 
 openai.api_key = st.secrets["openai"]["api_key"]
 
@@ -89,6 +91,15 @@ def generate_social_media_posts(text, platforms):
 
     return posts
 
+def image_to_base64(image_file, resize=None):
+    image = Image.open(image_file)
+    if resize:
+        image = image.resize((resize[0], resize[1]))
+    file_buffer = io.BytesIO()
+    image.save(file_buffer, format="PNG")
+    encoded_img = base64.b64encode(file_buffer.getvalue()).decode()
+    return encoded_img
+
 def main():
     if check_password():
         st.set_page_config(
@@ -132,12 +143,19 @@ def main():
             st.subheader("Generated Social Media Posts:")
             posts = generate_social_media_posts(text, platforms)
             for platform, (post, logo_file) in posts.items():
-                st.subheader(platform)
-                st.markdown('<div style="display:flex;">', unsafe_allow_html=True)
-                st.image(Image.open(logo_file).resize((32, 32)), width=32)
-                st.markdown(f'<div style="margin-left:10px;"><div style="width:100%; padding:10px; background-color:#3399ff; border-radius:5px; word-wrap: break-word;"><pre>{post}</pre></div></div>', unsafe_allow_html=True)
+                platform_img_base64 = image_to_base64(logo_file, resize=(32, 32))
+
+                st.markdown(
+                    f'<div>'
+                    f'<img src="data:image/png;base64,{platform_img_base64}" style="display: inline; height: 32px; width: 32px;">'
+                    f'<h2 style="display: inline; margin-left: 10px;">{platform}</h2>'
+                    f'</div>',
+                    unsafe_allow_html=True,
+                )
+                st.markdown(f'<div style="margin-left:42px;"><div style="width:100%; padding:10px; background-color:#3399ff; border-radius:5px; word-wrap: break-word;"><pre>{post}</pre></div></div>', unsafe_allow_html=True)
 
 if __name__ == "__main__":
     main()
+
 
 
