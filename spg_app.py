@@ -115,7 +115,7 @@ def main():
             ["Twitter", "LinkedIn", "Facebook", "TikTok", "Instagram"]
         )
         
-        if len(platforms) == 0
+        if len(platforms) == 0:
             st.warning("Please select at least one platform.")
             st.stop()
 
