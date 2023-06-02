@@ -68,9 +68,6 @@ def generate_social_media_posts(text, platforms):
     }
     posts = {}
 
-    if "All" in platforms:
-        platforms = list(social_media_platforms.keys())
-
     for platform in platforms:
         if platform not in social_media_platforms:
             st.error(f"Invalid platform: {platform}")
