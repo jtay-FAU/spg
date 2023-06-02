@@ -86,6 +86,7 @@ def generate_social_media_posts(text, platforms):
             temperature=0.7,
             top_p=1
         )
+        time.sleep(2)  # Add sleep between API requests
         post = response.choices[0].text.strip()
         posts[platform] = (post, logo_file)
 
