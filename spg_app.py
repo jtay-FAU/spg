@@ -57,7 +57,7 @@ def fetch_text_from_url(url):
 
     return h1_title, text
 
-def generate_social_media_posts(text, platforms=None):
+def generate_social_media_posts(text, platforms):
     social_media_platforms = {
         "Twitter": "twitter_logo.png",
         "LinkedIn": "linkedin_logo.png",
