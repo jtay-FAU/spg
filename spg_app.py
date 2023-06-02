@@ -123,10 +123,7 @@ def main():
 
         if new_platform:
             platforms.append(new_platform)
-            
-        if len(platforms) == 0:
-            st.warning("Please select at least one platform.")
-            st.stop()            
+             
 
         if st.button("Generate Posts"):
             h1_title, text = fetch_text_from_url(url)
