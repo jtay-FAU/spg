@@ -57,7 +57,7 @@ def fetch_text_from_url(url):
 
     return h1_title, text
 
-def generate_social_media_posts(text, platforms):
+def generate_social_media_posts(text, platforms=None):
     social_media_platforms = {
         "Twitter": "twitter_logo.png",
         "LinkedIn": "linkedin_logo.png",
@@ -108,8 +108,13 @@ def main():
         url = st.text_input("Enter the URL:")
         platforms = st.multiselect(
             "Select social media platforms:",
-            ["All", "Twitter", "LinkedIn", "Facebook", "TikTok", "Instagram"]
+            ["Twitter", "LinkedIn", "Facebook", "TikTok", "Instagram"]
         )
+        
+        select_all = st.button("Select All")
+        if select_all:
+            platforms = ["Twitter", "LinkedIn", "Facebook", "TikTok", "Instagram"]
+        
         new_platform = st.text_input("Enter a new platform (optional):")
 
         if new_platform:
