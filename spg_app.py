@@ -119,7 +119,9 @@ def main():
         if select_all:
             platforms = ["Twitter", "LinkedIn", "Facebook", "TikTok", "Instagram"]
             
-        if len(platforms) == 0 and not select_all[0] and not new_platform[0]:
+        )   
+        
+        if len(platforms) == 0 and not select_all and not new_platform:
             st.warning("Please select at least one platform.")
             st.stop()
         
