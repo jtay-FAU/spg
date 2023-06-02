@@ -115,22 +115,21 @@ def main():
             ["Twitter", "LinkedIn", "Facebook", "TikTok", "Instagram"]
         )
         
-        if len(platforms) == 0 and not select_all and not new_platform:
-            st.warning("Please select at least one platform.")
-            st.stop()               
-        
-        select_all = st.checkbox("Select All")
-        if select_all:
-            platforms = ["Twitter", "LinkedIn", "Facebook", "TikTok", "Instagram"]                   
-        
-        if len(platforms) == 0 and not select_all and not new_platform:
+        if len(platforms) == 0 and not st.checkbox("Select All") and not st.text_input("Enter a new platform (optional):"):
             st.warning("Please select at least one platform.")
             st.stop()
-        
+
+        select_all = st.checkbox("Select All")
+        if select_all:
+            platforms = ["Twitter", "LinkedIn", "Facebook", "TikTok", "Instagram"]
+            
         new_platform = st.text_input("Enter a new platform (optional):")
 
         if new_platform:
             platforms.append(new_platform)
+
+        if "All" in platforms:
+            platforms.remove("All")
 
         if st.button("Generate Posts"):
             h1_title, text = fetch_text_from_url(url)
@@ -153,3 +152,4 @@ def main():
                 
 if __name__ == "__main__":
     main()
+
