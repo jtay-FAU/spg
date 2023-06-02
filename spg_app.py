@@ -133,7 +133,7 @@ def main():
             posts = generate_social_media_posts(text, platforms)
             for platform, (post, logo_file) in posts.items():
                 st.subheader(platform)
-                st.markdown('<div style="display:flex;">', unsafe_allow_html=True)
+                ##st.markdown('<div style="display:flex;">', unsafe_allow_html=True)
                 st.image(Image.open(logo_file).resize((32, 32)), width=32)
                 st.markdown(f'<div style="margin-left:10px;"><div style="width:100%; padding:10px; background-color:#3399ff; border-radius:5px; word-wrap: break-word;"><pre>{post}</pre></div></div>', unsafe_allow_html=True)
 
