@@ -111,9 +111,13 @@ def main():
             ["Twitter", "LinkedIn", "Facebook", "TikTok", "Instagram"]
         )
         
-        select_all = st.button("Select All")
+        select_all = st.checkbox("Select All")
         if select_all:
             platforms = ["Twitter", "LinkedIn", "Facebook", "TikTok", "Instagram"]
+            
+        if len(platforms) == 0:
+            st.warning("Please select at least one platform.")
+            st.stop()
         
         new_platform = st.text_input("Enter a new platform (optional):")
 
