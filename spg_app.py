@@ -128,9 +128,6 @@ def main():
         if new_platform:
             platforms.append(new_platform)
 
-        if "All" in platforms:
-            platforms.remove("All")
-
         if st.button("Generate Posts"):
             h1_title, text = fetch_text_from_url(url)
             
