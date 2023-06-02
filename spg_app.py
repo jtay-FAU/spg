@@ -85,7 +85,7 @@ def generate_social_media_posts(text, platforms):
         post = response.choices[0].text.strip()
         posts[platform] = (post, logo_file)
 
-        time.sleep(2)
+        time.sleep(3)
 
     return posts
 
