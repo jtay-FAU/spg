@@ -41,23 +41,29 @@ def check_password():
 def fetch_text_from_url(url):
     response = requests.get(url)
     soup = BeautifulSoup(response.text, 'html.parser')
+    
     h1_title = soup.find('h1').get_text().strip() if soup.find('h1') else ""
-    bespoke_page = soup.find(id='bespokePage', class_='bespokePage')
-
+    
+    bespoke_page = soup.find(id='bespokePage') \
+                 or soup.find(attrs={'class': 'bespokePage'}) \
+                 or soup.find(attrs={'class': 'htmlpage-content'})
+    
     if bespoke_page:
         for table in bespoke_page.find_all(class_='table'):
             table.extract()
         for info_box in bespoke_page.find_all(class_='infoBox'):
             info_box.extract()
         for card_body in bespoke_page.find_all(class_='card-body'):
-            card_body.extract()
+            card_body.extract()    
         for territory in bespoke_page.find_all(class_='territory'):
-            territory.extract()
-
+            territory.extract() 
+        for territory in bespoke_page.find_all(class_='emg-similar-courses'):
+            territory.extract()                
+            
         text = bespoke_page.get_text().strip()
     else:
-        text = "No text found in the specified div."
-
+        text = "Oops. No text was found in the specified webpage."
+    
     return h1_title, text
 
 def generate_social_media_posts(text, platforms):
@@ -74,12 +80,12 @@ def generate_social_media_posts(text, platforms):
         logo_file = social_media_platforms.get(platform, "custom_logo.png")
 
         completion = client.chat.completions.create(
-            model="gpt-3.5-turbo",
+            model="gpt-3.5-turbo-0125",
             temperature=0.7,
             max_tokens=1000,
             messages=[                
-                {"role": "system", "content": "You are a social media post generator. You role is to generate network specific social posts for an article or blog post, using the provided text"},
-                {"role": "user", "content": f"Create a social media post to promote the following article on {platform}. The post should be engaging and tailored to the {platform} audience. Text: \n\n{text}\n\n{platform} Post:"}
+                {"role": "system", "content": "You are a helpful social media post generator. Your role is to generate social network specific social posts for an article or blog post, using the provided text."},
+                {"role": "user", "content": f"Create a social media post to promote the following article on {platform}. The post should be engaging and tailored to the {platform} audience demographic. Text: \n\n{text}\n\n{platform} Post:"}
             ]
         )  
 
@@ -100,13 +106,13 @@ def main():
         )
 
         # Logo and title
-        logo_url = "https://www.findauniversity.com/img/logo.png"
+        logo_url = "https://www.keg.com/hubfs/keg_left_Sharp.svg"
         st.image(logo_url, width=200)
         st.title("Social Media Post Generator")
 
         url = st.text_input("Enter the URL:")
         platforms = st.multiselect(
-            "Select social media platforms:",
+            "Select the social media platforms:",
             ["Twitter", "LinkedIn", "Facebook", "TikTok", "Instagram"]
         )
 
@@ -143,6 +149,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-
