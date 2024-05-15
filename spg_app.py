@@ -1,11 +1,12 @@
 import streamlit as st
 import requests
 from bs4 import BeautifulSoup
-import openai
+from openai import OpenAI
 from PIL import Image
 import time
 
 openai.api_key = st.secrets["openai"]["api_key"]
+client = OpenAI()
 
 def check_password():
     """Returns `True` if the user entered the correct password."""
