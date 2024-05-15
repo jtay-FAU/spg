@@ -71,18 +71,17 @@ def generate_social_media_posts(text, platforms):
     for platform in platforms:
         logo_file = social_media_platforms.get(platform, "custom_logo.png")
 
-        prompt = f"Create a social media post to promote the following article on {platform}. The post should be engaging and tailored to the {platform} audience. Text: \n\n{text}\n\n{platform} Post:"
-        response = openai.Completion.create(
-            engine="text-davinci-003",
-            prompt=prompt,
-            max_tokens=1000,
-            n=1,
-            stop=None,
+        completion = client.chat.completions.create(
+            model="gpt-3.5-turbo",
             temperature=0.7,
-            top_p=1
-        )
+            max_tokens=1000,
+            messages=[                
+                {"role": "system", "content": "You are a social media post generator. You role is to generate network specific social posts for an article or blog post, using the provided text"},
+                {"role": "user", "content": f"Create a social media post to promote the following article on {platform}. The post should be engaging and tailored to the {platform} audience. Text: \n\n{text}\n\n{platform} Post:"}
+            ]
+        )  
 
-        post = response.choices[0].text.strip()
+        post = completion.choices[0].message.content
         posts[platform] = (post, logo_file)
 
         time.sleep(3)
