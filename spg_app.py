@@ -4,8 +4,9 @@ from bs4 import BeautifulSoup
 from openai import OpenAI
 from PIL import Image
 import time
+import os
 
-openai.api_key = st.secrets["openai"]["api_key"]
+os.environ['OPENAI_API_KEY'] = st.secrets["openai"]["api_key"]
 client = OpenAI()
 
 def check_password():
